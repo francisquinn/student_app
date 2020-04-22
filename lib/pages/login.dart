@@ -126,6 +126,7 @@ class _LoginState extends State<Login> {
 
           if (field == 'em') {
             print('this is an email error');
+            print('testing github');
             displayEmailError(error);
           }
           if (field == 'pa') {
