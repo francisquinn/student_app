@@ -11,7 +11,8 @@ class Student {
 }
 
 Future<List<Student>> getStudent() async {
-  final response = await http.get('http://10.0.2.2:4001/api/student');
+  //10.0.2.2 emulator IP
+  final response = await http.get('http://192.168.1.158:4001/api/student');
   if (response.statusCode == 200) {
     var jsonData = json.decode(response.body);
     List<Student> students = [];
@@ -33,7 +34,7 @@ Future<Map> registerTeacher(String name, String email, String password) async {
   print(name);
   print(email);
   print(password);
-  http.Response response = await http.post('http://10.0.2.2:4001/api/register',
+  http.Response response = await http.post('http://192.168.1.158:4001/api/register',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -62,7 +63,7 @@ Future<Map> registerTeacher(String name, String email, String password) async {
 
 Future<Map> loginTeacher(String email, String password) async {
   
-  http.Response response = await http.post('http://10.0.2.2:4001/api/login',
+  http.Response response = await http.post('http://192.168.1.158:4001/api/login',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

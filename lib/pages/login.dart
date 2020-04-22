@@ -14,7 +14,7 @@ class _LoginState extends State<Login> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
-    @override
+  @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
@@ -48,22 +48,24 @@ class _LoginState extends State<Login> {
           backgroundColor: Colors.white,
         ),
         body: Center(
-          child: Container(
-            child: Padding(
-              padding: const EdgeInsets.all(36.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  emailField,
-                  SizedBox(height: 20.0),
-                  passwordField,
-                  SizedBox(
-                    height: 40.0,
-                  ),
-                  loginButton,
-                  registerButton,
-                ],
+          child: SingleChildScrollView(
+            child: Container(
+              child: Padding(
+                padding: const EdgeInsets.all(36.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    emailField,
+                    SizedBox(height: 20.0),
+                    passwordField,
+                    SizedBox(
+                      height: 40.0,
+                    ),
+                    loginButton,
+                    registerButton,
+                  ],
+                ),
               ),
             ),
           ),
@@ -110,16 +112,15 @@ class _LoginState extends State<Login> {
               ? _passwordValidate = true
               : _passwordValidate = false;
 
-          loginMessage = await loginTeacher(_emailController.text, _passwordController.text);
-          
-          
+          loginMessage = await loginTeacher(
+              _emailController.text, _passwordController.text);
 
           var _list = loginMessage.values.toList();
           String field = _list[0];
           error = _list[1];
           print(_list[1]);
 
-          if(field == 'success'){
+          if (field == 'success') {
             print('success in login page');
             loginUser();
           }
@@ -133,10 +134,9 @@ class _LoginState extends State<Login> {
             print('this is a password error');
             displayPasswordError(error);
           }
-          if (field == 'ma'){
+          if (field == 'ma') {
             displayLoginError(error);
           }
-          
         });
       },
       child: Text('Login'),
@@ -183,9 +183,8 @@ class _LoginState extends State<Login> {
     });
   }
 
-  void loginUser(){
-    Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => Home()));
+  void loginUser() {
+    Navigator.pushReplacement(
+        context, CupertinoPageRoute(builder: (context) => Home()));
   }
 }
-
-

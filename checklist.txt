@@ -1,0 +1,20 @@
+Student app checklist
+
+- Login
+
+textfields [x]
+button [x]
+appbar [x]
+error handle [x]
+signup button [x]
+login submit [-]
+
+-Register
+
+textfield [x]
+button [x]
+page nav [x]
+error handle [x]
+submit snackbar [-]
+appbar [x]
+
