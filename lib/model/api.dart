@@ -1,24 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'Student.dart';
 
-class Student {
-  final String name;
-  final String className;
-  final int grade;
-
-  Student(this.name, this.className, this.grade);
-}
 
 Future<List<Student>> getStudent() async {
   //10.0.2.2 emulator IP
-  final response = await http.get('http://192.168.1.158:4001/api/student');
+  final response = await http.get('http://10.0.2.2:4001/api/student');
   if (response.statusCode == 200) {
     var jsonData = json.decode(response.body);
     List<Student> students = [];
 
     for (var u in jsonData) {
-      Student student = Student(u['name'], u['class'], u['grade']);
+      Student student = Student(u['name'], u['studentEmail'], u['className'], u['grade']);
       students.add(student);
     }
 
@@ -34,7 +28,7 @@ Future<Map> registerTeacher(String name, String email, String password) async {
   print(name);
   print(email);
   print(password);
-  http.Response response = await http.post('http://192.168.1.158:4001/api/register',
+  http.Response response = await http.post('http://10.0.2.2:4001/api/register',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -63,7 +57,7 @@ Future<Map> registerTeacher(String name, String email, String password) async {
 
 Future<Map> loginTeacher(String email, String password) async {
   
-  http.Response response = await http.post('http://192.168.1.158:4001/api/login',
+  http.Response response = await http.post('http://10.0.2.2:4001/api/login',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

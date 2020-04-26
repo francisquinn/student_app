@@ -80,9 +80,11 @@ class _LoginState extends State<Login> {
       decoration: InputDecoration(
         contentPadding: EdgeInsets.all(20.0),
         labelText: "Email",
+        suffixIcon: Icon(Icons.email),
         errorText: _emailValidate ? error : null,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
       ),
+      
     );
     return emailField;
   }
@@ -94,6 +96,7 @@ class _LoginState extends State<Login> {
       decoration: InputDecoration(
         contentPadding: EdgeInsets.all(20.0),
         labelText: 'Password',
+        suffixIcon: Icon(Icons.lock),
         errorText: _passwordValidate ? error : null,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
       ),

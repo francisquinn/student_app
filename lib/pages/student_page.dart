@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:student_app/model/api.dart';
+import 'package:student_app/model/Student.dart';
 
 class StudentPage extends StatelessWidget {
   final Student student;
