@@ -1,5 +1,18 @@
 Student app checklist
 
+- Functions
+teacher can login in and register to app
+display the list of student dedicated to that teacher
+view each student
+have a grades page to show all the grades of the students
+sort high/low
+search student name in home and grade page
+drawer to display teacher information and logout
+profile page where teacher can edit there profile (change name, password etc..)
+add a new student
+remove a student
+edit a student
+
 - Login
 
 textfields [x]

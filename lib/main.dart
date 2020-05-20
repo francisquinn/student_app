@@ -8,7 +8,7 @@ import 'package:student_app/model/api.dart';
 
 void main() => runApp(MaterialApp(
   
-  initialRoute: '/',
+  initialRoute: '/home',
   routes: {
     
     '/' : (context) => Login(),

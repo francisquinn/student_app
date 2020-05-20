@@ -2,11 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'Student.dart';
+import 'Teacher.dart';
 
-
+// get a list of students from the database
 Future<List<Student>> getStudent() async {
-  //10.0.2.2 emulator IP
-  final response = await http.get('http://10.0.2.2:4001/api/student');
+  //10.0.2.2 emulator IP 4000 port
+  final response = await http.get('http://10.0.2.2:4000/api/student');
   if (response.statusCode == 200) {
     var jsonData = json.decode(response.body);
     List<Student> students = [];
@@ -24,11 +25,12 @@ Future<List<Student>> getStudent() async {
   }
 }
 
+// Register a teacher through the REST API to the mongoDB
 Future<Map> registerTeacher(String name, String email, String password) async {
   print(name);
   print(email);
   print(password);
-  http.Response response = await http.post('http://10.0.2.2:4001/api/register',
+  http.Response response = await http.post('http://10.0.2.2:4000/api/register',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -55,9 +57,10 @@ Future<Map> registerTeacher(String name, String email, String password) async {
   }
 }
 
+// login teacher, check credentials in DB
 Future<Map> loginTeacher(String email, String password) async {
   
-  http.Response response = await http.post('http://10.0.2.2:4001/api/login',
+  http.Response response = await http.post('http://10.0.2.2:4000/api/login',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -65,8 +68,6 @@ Future<Map> loginTeacher(String email, String password) async {
         'email': email,
         'password': password,
       }));
-
-
 
   if (response.statusCode == 200){
     Map<String, String> success = {

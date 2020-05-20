@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:student_app/model/api.dart';
 import 'package:student_app/pages/student_page.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:student_app/pages/grades.dart';
+import 'package:student_app/pages/profile.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -9,11 +11,13 @@ class Home extends StatefulWidget {
 }
 
 int _selectedIndex = 0;
-List<Widget> _widgetOptions = <Widget>[
-  StudentList(),
-  GradePage(),
-  ProfilePage(),
-];
+List<BottomNavigationBarItem> bottomNavigationPages (){
+  return [
+  BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')),
+  BottomNavigationBarItem(icon: Icon(Icons.bookmark), title: Text('Grades')),
+  BottomNavigationBarItem(icon: Icon(Icons.account_circle), title: Text('Profile')),
+  ];
+}
 
 class _HomeState extends State<Home> {
   @override
@@ -26,30 +30,62 @@ class _HomeState extends State<Home> {
       drawer: Drawer(
         child: StudentDrawer(),
       ),
-      body: _widgetOptions.elementAt(_selectedIndex),
+      body: buildPageView(),
       bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.bookmark), title: Text('Grades')),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle), title: Text('Profile')),
-        ],
+        items: bottomNavigationPages(),
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.blueAccent,
-        onTap: _onItemTapped,
+        //onTap: _onItemTapped,
+        onTap: (index) {
+          bottomTapped(index);
+        },
       ),
     );
   }
 
-  void _onItemTapped(int index) {
+  // PageController to manage the sliding pages
+  PageController pageController = PageController(
+    initialPage: 0,
+    keepPage: true,
+  );
+
+  // build the page that the controller is on
+  Widget buildPageView() {
+    return PageView(
+      controller: pageController,
+      onPageChanged: (index) {
+        pageChanged(index);
+      },
+      children: <Widget>[
+        HomePage(),
+        GradePage(),
+        ProfilePage(),
+      ],
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void pageChanged(int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
+
+  // slide animation when icon is tapped
+  void bottomTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+      pageController.animateToPage(index, duration: Duration(milliseconds: 500), curve: Curves.ease);
+    });
+  }
 }
 
-class StudentList extends StatelessWidget {
+// Home page 
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -77,7 +113,7 @@ class StudentList extends StatelessWidget {
                         onTap: () {
                           Navigator.push(
                               context,
-                              MaterialPageRoute(
+                              CupertinoPageRoute(
                                   builder: (context) =>
                                       StudentPage(snapshot.data[index])));
                         }),
@@ -91,60 +127,11 @@ class StudentList extends StatelessWidget {
     );
   }
 }
-
-class ProfilePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Text('Profile Page'),
-      ),
-    );
-  }
-}
-
-class GradePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Text('Grade Page'),
-      ),
-    );
-  }
-}
-
+// drawer slider 
 class StudentDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      children: <Widget>[
-        FutureBuilder(
-          future: getStudent(), // get teacher 
-          builder: (context, snapshot){
-          DrawerHeader(
-            child: Text('Drawer'),
-            decoration: BoxDecoration(
-              color: Colors.blueAccent,
-            ),
-          );
-          ListTile(
-            title: Text('item 1'),
-            onTap: () {
-              Navigator.push(context,
-                  CupertinoPageRoute(builder: (context) => ProfilePage()));
-            },
-          
-          );
-          },
-        ),
-      ],
-    );
-  }
-}
-
-/*
-return ListView(
       children: <Widget>[
         DrawerHeader(
           child: Text('Drawer'),
@@ -155,11 +142,11 @@ return ListView(
         ListTile(
           title: Text('item 1'),
           onTap: () {
-            
             Navigator.push(context,
                 CupertinoPageRoute(builder: (context) => ProfilePage()));
           },
         ),
       ],
     );
-    */
+  }
+}
